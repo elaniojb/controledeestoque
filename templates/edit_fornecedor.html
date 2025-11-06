@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Editar: {{ fornecedor.nome }} {% endblock %}</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="nome">Nome</label>
+        <input type="text" name="nome"
+               placeholder="Nome" class="form-control"
+               value="{{ request.form['nome'] or fornecedor.nome }}" required></input>
+        <label for="endereco">Endereço</label>
+        <input type="text" name="endereco"
+               placeholder="Endereço" class="form-control"
+               value="{{ request.form['endereco'] or fornecedor.endereco }}"></input>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </div>
+</form>
+
+<hr>
+
+<form action="{{ url_for('del_fornecedor', id=fornecedor.id) }}" method="POST">
+    <input type="submit" value="Apagar Fornecedor"
+            class="btn btn-danger btn-sm"
+            onclick="return confirm('Você tem certeza que deseja apagar este fornecedor?')">
+</form>
+
+{% endblock %}

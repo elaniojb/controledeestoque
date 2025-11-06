@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{% block title %} Inventário {% endblock %}</h1>
+  <br>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover" style="table-layout: auto; width: auto;">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Nome</th>
+          <th scope="col">Marca</th>
+          <th scope="col">Quantidade</th>
+          <th scope="col" class="text-nowrap" style="width: 1%;">Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for compra in compras %}
+        <tr>
+          <td>{{ compra.produto.nome }}</td>
+          <td>{{ compra.produto.marca }}</td>
+          <td>{{ compra.quantidade }}</td>
+          <td class="text-nowrap d-flex gap-1">
+            <form action="{{ url_for('edit_compra', id=compra.id) }}" method="GET" style="display: inline;">
+              <input type="submit" value="Alterar"
+                     class="btn btn-primary btn-sm mr-2">
+            </form>
+            <form action="{{ url_for('del_inventario', id=compra.id) }}" method="POST" style="display: inline;">
+              <input type="submit" value="Apagar"
+                     class="btn btn-danger btn-sm"
+                     onclick="return confirm('Você tem certeza que deseja apagar?')">
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
