@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Nova compra {% endblock %}</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="fornecedor">Fornecedor:</label>
+        <select id="fornecedor" name="fornecedor" class="form-control" required>
+            {% for fornecedor in fornecedores %}
+            <option value="{{ fornecedor.id }}">{{ fornecedor.nome }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <hr>
+    <h3>Produtos</h3>
+    <div id="produtos">
+        <div class="produto-item">
+            <div class="form-group">
+                <label for="produto_id">Produto:</label>
+                <select name="produto_id" class="form-control" required>
+                    {% for produto in produtos %}
+                    <option value="{{ produto.id }}">{{ produto.nome }} - {{ produto.marca }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="quantidade">Quantidade:</label>
+                <input type="number" name="quantidade" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="preco_unitario">Preço Unitário:</label>
+                <input type="number" step="0.01" name="preco_unitario" class="form-control" required>
+            </div>
+            <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removerProduto(this)">Remover Item</button>
+            <br>
+            <br>
+        </div>
+    </div>
+
+    <!-- Div flexbox para alinhar os botões -->
+    <div class="d-flex justify-content-end mt-3">
+        <button type="button" class="btn btn-info" onclick="adicionarProduto()">Adicionar Outro Produto</button>
+    </div>
+    <br>
+    <div class="d-flex justify-content-end mt-3">
+
+        <button type="submit" class="btn btn-success">Cadastrar Compra</button>
+    </div>
+</form>
+
+<script>
+    // Função para adicionar novos produtos dinamicamente
+    function adicionarProduto() {
+        const produtosDiv = document.getElementById('produtos');
+        const novoProduto = produtosDiv.firstElementChild.cloneNode(true);
+
+        // Limpar os campos do novo produto
+        novoProduto.querySelectorAll('input').forEach(input => input.value = '');
+        produtosDiv.appendChild(novoProduto);
+    }
+
+    // Função para remover um produto da lista
+    function removerProduto(botao) {
+        const produtoItem = botao.parentElement;
+        const produtosDiv = document.getElementById('produtos');
+        if (produtosDiv.children.length > 1) {  // Evitar remover o último produto
+            produtosDiv.removeChild(produtoItem);
+        } else {
+            alert("Você deve manter pelo menos um produto!");
+        }
+    }
+</script>
+
+{% endblock %}

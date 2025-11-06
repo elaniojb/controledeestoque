@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="form-group">
+        <a href="{{ url_for('new_fornecedor') }}" class="btn btn-primary">Novo Fornecedor</a>
+    </div>
+    <br>
+<form method="post">
+    <div class="form-group">
+        <label for="nome">Buscar por fornecedor:</label>
+        <input type="text" name="fornecedor" id="fornecedor"
+               placeholder="Nome" class="form-control"
+               value="{{ request.form['fornecedor'] }}" required></input>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Pesquisar</button>
+    </div>
+</form>
+    <br>
+    <div class="table-responsive">
+        <table class="table table-bordered table-condensed table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Endereço</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fornecedor in fornecedores %}
+                <tr>
+                    <td>
+                        <a href="{{ url_for('edit_fornecedor', id=fornecedor.id) }}" >
+                            {{ fornecedor.nome }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ fornecedor.endereco }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <hr>
+{% endblock %}

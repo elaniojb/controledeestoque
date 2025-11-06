@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Cadastrar um novo fornecedor {% endblock %}</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="nome">Nome</label>
+        <input type="text" name="nome"
+               placeholder="Nome" class="form-control"
+               value="{{ request.form['nome'] }}" required></input>
+        <label for="endereco">Endereço</label>
+        <input type="text" name="endereco"
+               placeholder="Endereço" class="form-control"
+               value="{{ request.form['endereco'] }}"></input>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </div>
+</form>
+{% endblock %}
